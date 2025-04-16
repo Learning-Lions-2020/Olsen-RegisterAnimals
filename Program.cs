@@ -23,11 +23,11 @@ public class Program
             switch (input)
             {
                 case "1":
-                    repository.AddElephant();
+                    repository.AddAnimal(new Elephant());
                     Console.WriteLine("Elephant added!\n");
                     break;
                 case "2":
-                    repository.AddLion();
+                    repository.AddAnimal(new Lion());
                     Console.WriteLine("Lion added!\n");
                     break;
                 case "3":
@@ -41,8 +41,8 @@ public class Program
 
         // Display final counts
         Console.WriteLine("\nWildlife Tracker Summary:");
-        Console.WriteLine($"Number of Elephants: {repository.GetElephantCount()}");
-        Console.WriteLine($"Number of Lions: {repository.GetLionCount()}");
+        Console.WriteLine($"Number of Elephants: {repository.GetElephantCount().Count()}");
+        Console.WriteLine($"Number of Lions: {repository.GetLionCount().Count()}");
         Console.WriteLine($"Total Animals: {repository.GetTotalAnimalCount()}");
         Console.WriteLine("Thank you for using the Wildlife Tracker!");
     }

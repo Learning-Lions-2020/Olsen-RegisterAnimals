@@ -1,37 +1,52 @@
-﻿public class AnimalRepository
+﻿// Base class for animals
+public abstract class Animal
 {
-    private int _elephantCount;
-    private int _lionCount;
+    public DateTime SightingTime { get; set; } // Example property for tracking
+    protected Animal()
+    {
+        SightingTime = DateTime.Now;
+    }
+}
+
+// Elephant subclass
+public class Elephant : Animal
+{
+}
+
+// Lion subclass
+public class Lion : Animal
+{
+}
+
+public class AnimalRepository
+{
+    private readonly List<Animal> _animals;
 
     public AnimalRepository()
     {
-        _elephantCount = 0;
-        _lionCount = 0;
-
+        _animals = new List<Animal>();
     }
 
-    public void AddElephant()
+    public void AddAnimal<T>(T animal) where T : Animal
     {
-        _elephantCount++;
+        if (animal == null)
+            throw new ArgumentNullException(nameof(animal));
+
+        _animals.Add(animal);
     }
 
-    public void AddLion()
+    public IEnumerable<Lion> GetLionCount()
     {
-        _lionCount++;
+        return _animals.OfType<Lion>();
     }
 
-    public int GetElephantCount()
+    public IEnumerable<Elephant> GetElephantCount()
     {
-        return _elephantCount;
-    }
-
-    public int GetLionCount()
-    {
-        return _lionCount;
+        return _animals.OfType<Elephant>();
     }
 
     public int GetTotalAnimalCount()
     {
-        return _elephantCount + _lionCount;
+        return _animals.Count;
     }
 }
