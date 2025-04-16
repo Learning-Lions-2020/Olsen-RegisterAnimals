@@ -1,19 +1,19 @@
-﻿// Base class for animals
+﻿
 public abstract class Animal
 {
-    public DateTime SightingTime { get; set; } // Example property for tracking
+    public DateTime SightingTime { get; set; } 
     protected Animal()
     {
         SightingTime = DateTime.Now;
     }
 }
 
-// Elephant subclass
+//subclass
 public class Elephant : Animal
 {
 }
 
-// Lion subclass
+// subclass
 public class Lion : Animal
 {
 }
