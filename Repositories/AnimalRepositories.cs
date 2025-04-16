@@ -7,6 +7,7 @@
     {
         _elephantCount = 0;
         _lionCount = 0;
+
     }
 
     public void AddElephant()
