@@ -7,11 +7,22 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var options = new DbContextOptionsBuilder<AnimalDbContext>()
-            .UseInMemoryDatabase(databaseName: "WildlifeTracker")
+        // Test with AnimalSqlRepository
+        Console.WriteLine("Testing with AnimalSqlRepository:");
+        var sqlOptions = new DbContextOptionsBuilder<AnimalDbContext>()
+            .UseInMemoryDatabase(databaseName: "WildlifeTrackerSql")
             .Options;
+        var sqlRepository = new AnimalSqlRepository<Animal>(new AnimalDbContext(sqlOptions));
+        RunTracker(sqlRepository);
 
-        var animalRepository = new AnimalSqlRepository<Animal>(new AnimalDbContext(options));
+        // Test with AnimalRepository
+        Console.WriteLine("\nTesting with AnimalRepository:");
+        var inMemoryRepository = new AnimalRepository();
+        RunTracker(inMemoryRepository);
+    }
+
+    private static void RunTracker(IAnimalRepository<Animal> animalRepository)
+    {
         bool continueRunning = true;
 
         Console.WriteLine("Welcome to the Wildlife Tracker!");
@@ -49,12 +60,12 @@ public class Program
         OutputAnimalCounts(animalRepository);
     }
 
-    public static void OutputAnimalCounts(AnimalSqlRepository<Animal> animalRepository)
+    public static void OutputAnimalCounts(IAnimalRepository<Animal> animalRepository)
     {
         Console.WriteLine("\nWildlife Tracker Summary:");
         Console.WriteLine($"Number of Elephants: {animalRepository.GetElephantCount()}");
         Console.WriteLine($"Number of Lions: {animalRepository.GetLionCount()}");
-        Console.WriteLine($"Total Animals: {animalRepository.GetElephantCount() + animalRepository.GetLionCount()}");
+        Console.WriteLine($"Total Animals: {animalRepository.GetTotalAnimalCount()}");
         Console.WriteLine("Thank you for using the Wildlife Tracker!");
     }
 }

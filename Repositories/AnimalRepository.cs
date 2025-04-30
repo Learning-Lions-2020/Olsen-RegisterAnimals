@@ -1,6 +1,11 @@
-﻿using RegisterAnimals.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using RegisterAnimals.Entities;
 
-public class AnimalRepository
+namespace RegisterAnimals.Data;
+
+public class AnimalRepository : IAnimalRepository<Animal>
 {
     private readonly List<Animal> _animals;
 
@@ -9,7 +14,7 @@ public class AnimalRepository
         _animals = new List<Animal>();
     }
 
-    public void AddAnimal<T>(T animal) where T : Animal
+    public void AddAnimal(Animal animal)
     {
         if (animal == null)
             throw new ArgumentNullException(nameof(animal));
@@ -17,14 +22,14 @@ public class AnimalRepository
         _animals.Add(animal);
     }
 
-    public IEnumerable<Lion> GetLionCount()
+    public int GetLionCount()
     {
-        return _animals.OfType<Lion>();
+        return _animals.OfType<Lion>().Count();
     }
 
-    public IEnumerable<Elephant> GetElephantCount()
+    public int GetElephantCount()
     {
-        return _animals.OfType<Elephant>();
+        return _animals.OfType<Elephant>().Count();
     }
 
     public int GetTotalAnimalCount()

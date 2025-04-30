@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RegisterAnimals.Data;
 using RegisterAnimals.Entities;
 
-public class AnimalSqlRepository<T> where T : Animal
+namespace RegisterAnimals.Data;
+
+public class AnimalSqlRepository<T> : IAnimalRepository<T> where T : Animal
 {
     private readonly AnimalDbContext _context;
     private readonly DbSet<Animal> _dbSet;
@@ -24,17 +25,16 @@ public class AnimalSqlRepository<T> where T : Animal
 
     public int GetLionCount()
     {
-        int numberOfLions = _dbSet
-            .OfType<Lion>()
-            .Count();
-        return numberOfLions;
+        return _dbSet.OfType<Lion>().Count();
     }
 
     public int GetElephantCount()
     {
-        int numberOfElephants = _dbSet
-            .OfType<Elephant>()
-            .Count();
-        return numberOfElephants;
+        return _dbSet.OfType<Elephant>().Count();
+    }
+
+    public int GetTotalAnimalCount()
+    {
+        return _dbSet.Count();
     }
 }
