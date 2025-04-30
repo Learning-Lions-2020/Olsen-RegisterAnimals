@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RegisterAnimals.Entities;
+using System.Collections;
 
 namespace RegisterAnimals.Data;
 
-public class AnimalSqlRepository<T> : IAnimalRepository<T> where T : Animal
+public class AnimalSqlRepository<T> : IAnimalRepository<T>, IEnumerable<T> where T : Animal
 {
     private readonly AnimalDbContext _context;
     private readonly DbSet<Animal> _dbSet;
@@ -36,5 +37,20 @@ public class AnimalSqlRepository<T> : IAnimalRepository<T> where T : Animal
     public int GetTotalAnimalCount()
     {
         return _dbSet.Count();
+    }
+
+    public List<Animal> GetAllAnimals()
+    {
+        return _dbSet.ToList();
+    }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        return _dbSet.OfType<T>().GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

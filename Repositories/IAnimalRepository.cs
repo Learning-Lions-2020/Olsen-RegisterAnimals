@@ -8,4 +8,6 @@ public interface IAnimalRepository<T> where T : Animal
     int GetLionCount();
     int GetElephantCount();
     int GetTotalAnimalCount();
+    List<Animal> GetAllAnimals();
+
 }

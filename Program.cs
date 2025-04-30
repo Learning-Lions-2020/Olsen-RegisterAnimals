@@ -2,6 +2,9 @@
 using RegisterAnimals.Data;
 using RegisterAnimals.Entities;
 using System;
+using System.Linq;
+
+namespace RegisterAnimals;
 
 public class Program
 {
@@ -62,10 +65,11 @@ public class Program
 
     public static void OutputAnimalCounts(IAnimalRepository<Animal> animalRepository)
     {
+        var animals = animalRepository.GetAllAnimals();
         Console.WriteLine("\nWildlife Tracker Summary:");
-        Console.WriteLine($"Number of Elephants: {animalRepository.GetElephantCount()}");
-        Console.WriteLine($"Number of Lions: {animalRepository.GetLionCount()}");
-        Console.WriteLine($"Total Animals: {animalRepository.GetTotalAnimalCount()}");
+        Console.WriteLine($"Number of Elephants: {animals.Count(a => a is Elephant)}");
+        Console.WriteLine($"Number of Lions: {animals.Count(a => a is Lion)}");
+        Console.WriteLine($"Total Animals: {animals.Count}");
         Console.WriteLine("Thank you for using the Wildlife Tracker!");
     }
 }
