@@ -1,22 +1,4 @@
-﻿
-public abstract class Animal
-{
-    public DateTime SightingTime { get; set; } 
-    protected Animal()
-    {
-        SightingTime = DateTime.Now;
-    }
-}
-
-//subclass
-public class Elephant : Animal
-{
-}
-
-// subclass
-public class Lion : Animal
-{
-}
+﻿using RegisterAnimals.Entities;
 
 public class AnimalRepository
 {

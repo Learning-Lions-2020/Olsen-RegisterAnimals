@@ -1,10 +1,17 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using RegisterAnimals.Data;
+using RegisterAnimals.Entities;
+using System;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        AnimalRepository repository = new AnimalRepository();
+        var options = new DbContextOptionsBuilder<AnimalDbContext>()
+            .UseInMemoryDatabase(databaseName: "WildlifeTracker")
+            .Options;
+
+        var animalRepository = new AnimalSqlRepository<Animal>(new AnimalDbContext(options));
         bool continueRunning = true;
 
         Console.WriteLine("Welcome to the Wildlife Tracker!");
@@ -23,11 +30,11 @@ public class Program
             switch (input)
             {
                 case "1":
-                    repository.AddAnimal(new Elephant());
+                    animalRepository.AddAnimal(new Elephant());
                     Console.WriteLine("Elephant added!\n");
                     break;
                 case "2":
-                    repository.AddAnimal(new Lion());
+                    animalRepository.AddAnimal(new Lion());
                     Console.WriteLine("Lion added!\n");
                     break;
                 case "3":
@@ -39,11 +46,15 @@ public class Program
             }
         }
 
-        // Display final counts
+        OutputAnimalCounts(animalRepository);
+    }
+
+    public static void OutputAnimalCounts(AnimalSqlRepository<Animal> animalRepository)
+    {
         Console.WriteLine("\nWildlife Tracker Summary:");
-        Console.WriteLine($"Number of Elephants: {repository.GetElephantCount().Count()}");
-        Console.WriteLine($"Number of Lions: {repository.GetLionCount().Count()}");
-        Console.WriteLine($"Total Animals: {repository.GetTotalAnimalCount()}");
+        Console.WriteLine($"Number of Elephants: {animalRepository.GetElephantCount()}");
+        Console.WriteLine($"Number of Lions: {animalRepository.GetLionCount()}");
+        Console.WriteLine($"Total Animals: {animalRepository.GetElephantCount() + animalRepository.GetLionCount()}");
         Console.WriteLine("Thank you for using the Wildlife Tracker!");
     }
 }
