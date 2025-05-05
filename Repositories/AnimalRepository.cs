@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using RegisterAnimals.Entities;
 
 namespace RegisterAnimals.Data;
 
-public class AnimalRepository : IAnimalRepository<Animal>, IEnumerable<Animal>
+public class AnimalRepository : IAnimalRepository<Animal>, IEnumerable<Animal>, IEnumerable
 {
     private readonly List<Animal> _animals;
 

@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace RegisterAnimals.Data;
 
-public class AnimalSqlRepository<T> : IAnimalRepository<T>, IEnumerable<T> where T : Animal
+public class AnimalSqlRepository<T> : IAnimalRepository<T>, IEnumerable<T>, IEnumerable where T : Animal
 {
     private readonly AnimalDbContext _context;
     private readonly DbSet<Animal> _dbSet;
