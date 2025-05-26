@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RegisterAnimals.Entities
+﻿namespace RegisterAnimals.Entities
 {
-    class Lion
+    class Lion : Animal
     {
+        public Lion() : base("Lion")
+        {
+        }
     }
 }

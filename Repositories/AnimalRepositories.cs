@@ -1,52 +1,37 @@
 ﻿
-public abstract class Animal
-{
-    public DateTime SightingTime { get; set; } 
-    protected Animal()
-    {
-        SightingTime = DateTime.Now;
-    }
-}
+using RegisterAnimals.Entities;
 
-//subclass
-public class Elephant : Animal
-{
-}
+namespace RegisterAnimals.Repositories;
 
-// subclass
-public class Lion : Animal
+public class AnimalRepository<T> where T : Animal
 {
-}
-
-public class AnimalRepository
-{
-    private readonly List<Animal> _animals;
+    private readonly List<Animal> animals = new List<T>();
 
     public AnimalRepository()
     {
-        _animals = new List<Animal>();
+        animals = new List<Animal>();
     }
 
-    public void AddAnimal<T>(T animal) where T : Animal
+    public void AddAnimal(T animal) 
     {
         if (animal == null)
             throw new ArgumentNullException(nameof(animal));
 
-        _animals.Add(animal);
+        animals.Add(animal);
     }
 
     public IEnumerable<Lion> GetLionCount()
     {
-        return _animals.OfType<Lion>();
+        return animals.OfType<Lion>();
     }
 
     public IEnumerable<Elephant> GetElephantCount()
     {
-        return _animals.OfType<Elephant>();
+        return animals.OfType<Elephant>();
     }
 
     public int GetTotalAnimalCount()
     {
-        return _animals.Count;
+        return animals.Count;
     }
 }
