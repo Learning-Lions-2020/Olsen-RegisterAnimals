@@ -1,34 +1,28 @@
 ﻿using RegisterAnimals.Entities;
 
-public class AnimalRepository
+namespace RegisterAnimals.Repositories;
+
+public class AnimalRepository<T> where T : Animal
 {
-    private readonly List<Animal> _animals;
+    private readonly List<T> animals = new List<T>();
 
-    public AnimalRepository()
+    public void AddAnimal(T animal)
     {
-        _animals = new List<Animal>();
+        animals.Add(animal);
     }
 
-    public void AddAnimal<T>(T animal) where T : Animal
+    public List<Lion> GetLionCount()
     {
-        if (animal == null)
-            throw new ArgumentNullException(nameof(animal));
-
-        _animals.Add(animal);
+        return animals.OfType<Lion>().ToList();
     }
 
-    public IEnumerable<Lion> GetLionCount()
+    public List<Elephant> GetElephantCount()
     {
-        return _animals.OfType<Lion>();
-    }
-
-    public IEnumerable<Elephant> GetElephantCount()
-    {
-        return _animals.OfType<Elephant>();
+        return animals.OfType<Elephant>().ToList();
     }
 
     public int GetTotalAnimalCount()
     {
-        return _animals.Count;
+        return animals.Count;
     }
 }
