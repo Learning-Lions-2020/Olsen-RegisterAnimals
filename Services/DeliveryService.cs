@@ -2,7 +2,7 @@
 
 public class DeliveryService
 {
-    public void DeliverArticles()
+    public void DeliverArticles(object? sender, EventArgs e)
     {
         Console.WriteLine("Articles are being delivered.");
     }

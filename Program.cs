@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RegisterAnimals.Data;
+﻿using RegisterAnimals.Data;
 using RegisterAnimals.Entities;
 using RegisterAnimals.Services;
 
@@ -9,30 +8,19 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        
-        Console.WriteLine("Testing with AnimalSqlRepository:");
-        var sqlOptions = new DbContextOptionsBuilder<AnimalDbContext>()
-            .UseInMemoryDatabase(databaseName: "WildlifeTrackerSql")
-            .Options;
-        var sqlRepository = new AnimalSqlRepository<Animal>(new AnimalDbContext(sqlOptions));
-        RunTracker(sqlRepository);
+        var animalRepository = new AnimalRepository();
+        RunTracker(animalRepository);
 
-        Console.WriteLine("\nTesting with AnimalRepository:");
-        var inMemoryRepository = new AnimalRepository();
-        RunTracker(inMemoryRepository);
+        Console.WriteLine("\n--- Event Handling Demo ---");
 
-        Console.WriteLine("\nSetting up event handling services:");
         var orderService = new OrderService();
-        var deliveryService = new DeliveryService();
         var notificationService = new NotificationService();
+        var deliveryService = new DeliveryService();
 
-        orderService.OrderPlaced += (sender, e) => deliveryService.DeliverArticles();
-        orderService.OrderPlaced += (sender, e) => notificationService.NotifyCustomer();
+        orderService.OrderPlaced += notificationService.NotifyCustomer;
+        orderService.OrderPlaced += deliveryService.DeliverArticles;
 
-        Console.WriteLine("Simulating order placement:");
         orderService.PlaceOrder();
-
-        Console.WriteLine("Event handling completed.");
     }
 
     private static void RunTracker(IAnimalRepository<Animal> animalRepository)

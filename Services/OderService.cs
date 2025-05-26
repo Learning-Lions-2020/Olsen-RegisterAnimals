@@ -6,11 +6,12 @@ public class OrderService
 
     public void PlaceOrder()
     {
-        OnOrderPlaced(EventArgs.Empty);
+        Console.WriteLine("Order has been placed.");
+        OnOrderPlaced();
     }
 
-    protected virtual void OnOrderPlaced(EventArgs e)
+    protected virtual void OnOrderPlaced()
     {
-        OrderPlaced?.Invoke(this, e);
+        OrderPlaced?.Invoke(this, EventArgs.Empty);
     }
 }
