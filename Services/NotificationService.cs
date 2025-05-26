@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace RegisterAnimals.Services;
+﻿namespace RegisterAnimals.Services;
 
 public class NotificationService
 {
-    public void NotifyCustomer()
+    public void NotifyCustomer(object? sender, EventArgs e)
     {
-        Console.WriteLine("Customer has been notified.");
+        Console.WriteLine("NotificationService: Customer has been notified.");
     }
 }

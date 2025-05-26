@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RegisterAnimals.Data;
+﻿using RegisterAnimals.Data;
 using RegisterAnimals.Entities;
-using System;
-using System.Linq;
+using RegisterAnimals.Services;
 
 namespace RegisterAnimals;
 
@@ -10,18 +8,19 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        // Test with AnimalSqlRepository
-        Console.WriteLine("Testing with AnimalSqlRepository:");
-        var sqlOptions = new DbContextOptionsBuilder<AnimalDbContext>()
-            .UseInMemoryDatabase(databaseName: "WildlifeTrackerSql")
-            .Options;
-        var sqlRepository = new AnimalSqlRepository<Animal>(new AnimalDbContext(sqlOptions));
-        RunTracker(sqlRepository);
+        var animalRepository = new AnimalRepository();
+        RunTracker(animalRepository);
 
-        // Test with AnimalRepository
-        Console.WriteLine("\nTesting with AnimalRepository:");
-        var inMemoryRepository = new AnimalRepository();
-        RunTracker(inMemoryRepository);
+        Console.WriteLine("\n--- Event Handling Demo ---");
+
+        var orderService = new OrderService();
+        var notificationService = new NotificationService();
+        var deliveryService = new DeliveryService();
+
+        orderService.OrderPlaced += notificationService.NotifyCustomer;
+        orderService.OrderPlaced += deliveryService.DeliverArticles;
+
+        orderService.PlaceOrder();
     }
 
     private static void RunTracker(IAnimalRepository<Animal> animalRepository)
