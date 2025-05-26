@@ -1,9 +1,8 @@
-﻿namespace RegisterAnimals.Entities
+﻿namespace RegisterAnimals.Entities;
+
+public class Lion : Animal
 {
-    class Lion : Animal
+    public Lion() : base("Lion")
     {
-        public Lion() : base("Lion")
-        {
-        }
     }
 }

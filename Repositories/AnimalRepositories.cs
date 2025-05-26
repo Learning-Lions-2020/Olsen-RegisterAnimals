@@ -1,33 +1,24 @@
-﻿
-using RegisterAnimals.Entities;
+﻿using RegisterAnimals.Entities;
 
 namespace RegisterAnimals.Repositories;
 
 public class AnimalRepository<T> where T : Animal
 {
-    private readonly List<Animal> animals = new List<T>();
+    private readonly List<T> animals = new List<T>();
 
-    public AnimalRepository()
+    public void AddAnimal(T animal)
     {
-        animals = new List<Animal>();
-    }
-
-    public void AddAnimal(T animal) 
-    {
-        if (animal == null)
-            throw new ArgumentNullException(nameof(animal));
-
         animals.Add(animal);
     }
 
-    public IEnumerable<Lion> GetLionCount()
+    public List<Lion> GetLionCount()
     {
-        return animals.OfType<Lion>();
+        return animals.OfType<Lion>().ToList();
     }
 
-    public IEnumerable<Elephant> GetElephantCount()
+    public List<Elephant> GetElephantCount()
     {
-        return animals.OfType<Elephant>();
+        return animals.OfType<Elephant>().ToList();
     }
 
     public int GetTotalAnimalCount()

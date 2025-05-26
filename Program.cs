@@ -1,12 +1,13 @@
 ﻿//using System;
 
 using RegisterAnimals.Entities;
+using RegisterAnimals.Repositories;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        AnimalRepository repository = new AnimalRepository();
+        AnimalRepository<Animal> repository = new AnimalRepository<Animal>();
         bool continueRunning = true;
 
         Console.WriteLine("Welcome to the Wildlife Tracker!");

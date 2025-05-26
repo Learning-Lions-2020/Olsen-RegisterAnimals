@@ -1,10 +1,8 @@
-﻿namespace RegisterAnimals.Entities
-{
-    class Elephant : Animal
-    {
-        public Elephant() :base()
-        {
-        }
+﻿namespace RegisterAnimals.Entities;
 
+public class Elephant : Animal
+{
+    public Elephant() : base("Elephant")
+    {
     }
 }
