@@ -2,8 +2,6 @@
 using RegisterAnimals.Data;
 using RegisterAnimals.Entities;
 using RegisterAnimals.Services;
-using System;
-using System.Linq;
 
 namespace RegisterAnimals;
 
